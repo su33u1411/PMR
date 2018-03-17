@@ -63,23 +63,18 @@ public class Servicehelper {
 		dbconnection.MakeConnection(dbname);
 		String password = "";
 		String accountstatus = "";
+		String accountType = "";
 		List<Document> data = dbconnection.findData("users", "username", request.get("username"));
 		if (data.size() != 0) {
 			for (Document doc : data) {
 				password = doc.getString("password");
 				accountstatus = doc.getString("accountstatus");
+				accountType = doc.getString("usertype");
 				if (SCryptUtil.check(request.get("password"), password) && accountstatus.equals("active")) {
 					HashMap<String, Object> usermap = new HashMap<String, Object>();
 					usermap.put("username", request.get("username"));
-					usermap.put("token", "1234567");
-					usermap.put("firstname", doc.getString("firstname"));
-					usermap.put("middlename", doc.getString("middlename"));
-					usermap.put("lastname", doc.getString("lastname"));
-					usermap.put("mobilephone", doc.getString("mobilephone"));
-					usermap.put("homephone", doc.getString("homephone"));
-					usermap.put("email", doc.getString("email"));
-					usermap.put("maillingaddress", doc.get("maillingaddress"));
-					usermap.put("physicaladdress", doc.get("physicaladdress"));
+					usermap.put("accountstatus", accountstatus);
+					usermap.put("accountType", accountType);
 					dbconnection.closeConnection();
 					return usermap;
 				} else {
