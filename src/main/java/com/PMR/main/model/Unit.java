@@ -13,8 +13,6 @@ public class Unit {
 	@NotNull
 	private String monthlypayment;
 	@NotNull
-	private UnitRequest unitrequest;
-	@NotNull
 	private String propertyID;
 	@NotNull
 	private String unitstatus;
@@ -28,13 +26,12 @@ public class Unit {
 	public Unit() {
 	}
 
-	public Unit(String unitID, Address unitaddress, String monthlypayment, UnitRequest unitrequest, String propertyID,
+	public Unit(String unitID, Address unitaddress, String monthlypayment, String propertyID,
 			String unitstatus, String currenttenent, String unitname, String unitcreated) {
 		super();
 		this.unitID = unitID;
 		this.unitaddress = unitaddress;
 		this.monthlypayment = monthlypayment;
-		this.unitrequest = unitrequest;
 		this.propertyID = propertyID;
 		this.unitstatus = unitstatus;
 		this.currenttenent = currenttenent;
@@ -65,15 +62,7 @@ public class Unit {
 	public void setMonthlypayment(String monthlypayment) {
 		this.monthlypayment = monthlypayment;
 	}
-
-	public UnitRequest getUnitrequest() {
-		return unitrequest;
-	}
-
-	public void setUnitrequest(UnitRequest unitrequest) {
-		this.unitrequest = unitrequest;
-	}
-
+	
 	public String getPropertyID() {
 		return propertyID;
 	}
@@ -125,8 +114,6 @@ public class Unit {
 		builder.append(unitaddress);
 		builder.append(", monthlypayment=");
 		builder.append(monthlypayment);
-		builder.append(", unitrequest=");
-		builder.append(unitrequest);
 		builder.append(", propertyID=");
 		builder.append(propertyID);
 		builder.append(", unitstatus=");

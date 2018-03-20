@@ -192,13 +192,6 @@ public class Servicehelper {
 			unitaddressmap.put("state", request.getUnitaddress().getState());
 			unitaddressmap.put("zipcode", request.getUnitaddress().getZipcode());
 			documentMap.put("unitaddress", unitaddressmap);
-			HashMap<String, Object> Requestmap = new HashMap<String, Object>();
-			Requestmap.put("requesttype", request.getUnitrequest().getRequesttype());
-			Requestmap.put("comments", request.getUnitrequest().getComments());
-			Requestmap.put("requestAuthor", request.getUnitrequest().getRequestAuthor());
-			Requestmap.put("status", request.getUnitrequest().getStatus());
-			Requestmap.put("requestdate", request.getUnitrequest().getRequestdate());
-			documentMap.put("unitRequest", Requestmap);
 			documentMap.put("propertyID", request.getPropertyID());
 			request.setUnitstatus("active");
 			request.setAccountcreated();
