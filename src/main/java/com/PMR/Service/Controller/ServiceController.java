@@ -77,6 +77,7 @@ public class ServiceController {
 	@ResponseBody
 	public ResponseEntity<Object> addUnit(@Valid @RequestBody Unit request, Errors error) {
 		ResponseEntity<Object> response = null;
+		System.out.println(error.toString());
 		if (error.hasErrors()) {
 			responseStatus.setStatus("Failed");
 			responseStatus.setMessage("Invalid Request/Bad Request");
