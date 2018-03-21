@@ -254,21 +254,19 @@ public class Servicehelper {
 		}
 	}
 	
-	public List<HashMap<String, Object>> TenantDetails(HashMap<String, String> request, String dbname) {
+	public HashMap<String, Object> TenantDetails(HashMap<String, String> request, String dbname) {
 		dbconnection.MakeConnection(dbname);
 		List<Document> unitdata = dbconnection.findData("units", "currentTenent", request.get("username"));
 		if (unitdata.size() !=0) {
-			List<HashMap<String, Object>> Propertieslist = new ArrayList<HashMap<String, Object>>();
-			HashMap<String, Object> propertymap = new HashMap<String, Object>();
+			HashMap<String, Object> unitmap = new HashMap<String, Object>();
 			for (Document doc : unitdata) {
-				propertymap.put("unitname", doc.getString("unitname"));
-				propertymap.put("monthlyPayment", doc.getString("monthlyPayment"));
-				propertymap.put("monthlyPaymentDate", doc.getString("monthlyPaymentDate"));
-				propertymap.put("unitaddress", doc.get("unitaddress"));
-				Propertieslist.add(propertymap);
+				unitmap.put("unitname", doc.getString("unitname"));
+				unitmap.put("monthlyPayment", doc.getString("monthlyPayment"));
+				unitmap.put("monthlyPaymentDate", doc.getString("monthlyPaymentDate"));
+				unitmap.put("unitaddress", doc.get("unitaddress"));
 			}
 			dbconnection.closeConnection();
-			return Propertieslist;
+			return unitmap;
 		} else {
 			dbconnection.closeConnection();
 			return null;
