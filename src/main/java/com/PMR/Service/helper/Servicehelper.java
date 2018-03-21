@@ -185,6 +185,7 @@ public class Servicehelper {
 			documentMap.put("unitID", UUID.randomUUID().toString());
 			documentMap.put("unitname", request.getUnitname());
 			documentMap.put("monthlyPayment", request.getMonthlypayment());
+			documentMap.put("monthlyPaymentDate", request.getMonthlypayment());
 			HashMap<String, Object> unitaddressmap = new HashMap<String, Object>();
 			unitaddressmap.put("addressline1", request.getUnitaddress().getAddressline1());
 			unitaddressmap.put("addressline2", request.getUnitaddress().getAddressline2());
@@ -243,6 +244,27 @@ public class Servicehelper {
 				propertymap.put("unitaddress", doc.get("unitaddress"));
 				propertymap.put("currentTenent", doc.getString("currentTenent"));
 				propertymap.put("unitRequest", doc.get("unitRequest"));
+				Propertieslist.add(propertymap);
+			}
+			dbconnection.closeConnection();
+			return Propertieslist;
+		} else {
+			dbconnection.closeConnection();
+			return null;
+		}
+	}
+	
+	public List<HashMap<String, Object>> TenantDetails(HashMap<String, String> request, String dbname) {
+		dbconnection.MakeConnection(dbname);
+		List<Document> unitdata = dbconnection.findData("units", "currentTenent", request.get("username"));
+		if (unitdata.size() !=0) {
+			List<HashMap<String, Object>> Propertieslist = new ArrayList<HashMap<String, Object>>();
+			HashMap<String, Object> propertymap = new HashMap<String, Object>();
+			for (Document doc : unitdata) {
+				propertymap.put("unitname", doc.getString("unitname"));
+				propertymap.put("monthlyPayment", doc.getString("monthlyPayment"));
+				propertymap.put("unitaddress", doc.get("unitaddress"));
+				propertymap.put("currentTenent", doc.getString("currentTenent"));
 				Propertieslist.add(propertymap);
 			}
 			dbconnection.closeConnection();

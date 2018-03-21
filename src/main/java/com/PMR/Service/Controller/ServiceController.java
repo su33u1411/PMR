@@ -29,6 +29,53 @@ public class ServiceController {
 	ResponseStatus responseStatus = new ResponseStatus();
 	Servicehelper servicehelper = new Servicehelper();
 
+
+	@RequestMapping(value = "/api/v1/login", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<Object> login(@RequestBody HashMap<String, String> request) {
+		ResponseEntity<Object> response = null;
+		if ((request.containsKey("username") && request.containsKey("password"))
+				&& (request.get("username") != null && request.get("password") != null)
+				&& (!request.get("username").equals("") && !request.get("password").equals(""))) {
+			HashMap<String, Object> userLogin = servicehelper.userLogin(request, "PMR");
+			if (userLogin != null) {
+				response = new ResponseEntity<>(userLogin, HttpStatus.OK);
+			} else {
+				responseStatus.setStatus("Failed");
+				responseStatus.setMessage("Login Falied, Please try again");
+				response = new ResponseEntity<>(responseStatus, HttpStatus.NOT_FOUND);
+			}
+		} else {
+			responseStatus.setStatus("Failed");
+			responseStatus.setMessage("Invalid Request/Bad Request");
+			response = new ResponseEntity<>(responseStatus, HttpStatus.BAD_REQUEST);
+		}
+		return response;
+	}
+	
+	@RequestMapping(value = "/api/v1/validateUsername", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<Object> validateUsername(@RequestBody HashMap<String, String> request) {
+		ResponseEntity<Object> response = null;
+		if (!request.containsKey("username") || request.get("username") == null
+				|| request.get("username").equals("")) {
+			responseStatus.setStatus("Failed");
+			responseStatus.setMessage("Invalid Request/Bad Request");
+			response = new ResponseEntity<>(responseStatus, HttpStatus.BAD_REQUEST);
+		} else {
+			if (!servicehelper.validateUsername(request, "PMR")) {
+				responseStatus.setStatus("Success");
+				responseStatus.setMessage("Username is avaliable");
+				response = new ResponseEntity<>(responseStatus, HttpStatus.OK);
+			} else {
+				responseStatus.setStatus("Failed");
+				responseStatus.setMessage("Invalid username, Please try again");
+				response = new ResponseEntity<>(responseStatus, HttpStatus.NOT_FOUND);
+			}
+		}
+		return response;
+	}
+	
 	@RequestMapping(value = "/api/v1/addUser", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<Object> addUser(@Valid @RequestBody Users request, Errors error) {
@@ -117,30 +164,7 @@ public class ServiceController {
 		}
 		return response;
 	}
-
-	@RequestMapping(value = "/api/v1/login", method = RequestMethod.POST)
-	@ResponseBody
-	public ResponseEntity<Object> login(@RequestBody HashMap<String, String> request) {
-		ResponseEntity<Object> response = null;
-		if ((request.containsKey("username") && request.containsKey("password"))
-				&& (request.get("username") != null && request.get("password") != null)
-				&& (!request.get("username").equals("") && !request.get("password").equals(""))) {
-			HashMap<String, Object> userLogin = servicehelper.userLogin(request, "PMR");
-			if (userLogin != null) {
-				response = new ResponseEntity<>(userLogin, HttpStatus.OK);
-			} else {
-				responseStatus.setStatus("Failed");
-				responseStatus.setMessage("Login Falied, Please try again");
-				response = new ResponseEntity<>(responseStatus, HttpStatus.NOT_FOUND);
-			}
-		} else {
-			responseStatus.setStatus("Failed");
-			responseStatus.setMessage("Invalid Request/Bad Request");
-			response = new ResponseEntity<>(responseStatus, HttpStatus.BAD_REQUEST);
-		}
-		return response;
-	}
-
+	
 	@RequestMapping(value = "/api/v1/getPropertydetails", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<Object> getPropertydetails(@RequestBody HashMap<String, String> request) {
@@ -162,30 +186,7 @@ public class ServiceController {
 		}
 		return response;
 	}
-	
-	@RequestMapping(value = "/api/v1/validateUsername", method = RequestMethod.POST)
-	@ResponseBody
-	public ResponseEntity<Object> validateUsername(@RequestBody HashMap<String, String> request) {
-		ResponseEntity<Object> response = null;
-		if (!request.containsKey("username") || request.get("username") == null
-				|| request.get("username").equals("")) {
-			responseStatus.setStatus("Failed");
-			responseStatus.setMessage("Invalid Request/Bad Request");
-			response = new ResponseEntity<>(responseStatus, HttpStatus.BAD_REQUEST);
-		} else {
-			if (!servicehelper.validateUsername(request, "PMR")) {
-				responseStatus.setStatus("Success");
-				responseStatus.setMessage("Username is avaliable");
-				response = new ResponseEntity<>(responseStatus, HttpStatus.OK);
-			} else {
-				responseStatus.setStatus("Failed");
-				responseStatus.setMessage("Invalid username, Please try again");
-				response = new ResponseEntity<>(responseStatus, HttpStatus.NOT_FOUND);
-			}
-		}
-		return response;
-	}
-	
+		
 	@RequestMapping(value = "/api/v1/getUnits", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<Object> getUnits(@RequestBody HashMap<String, String> request) {
@@ -197,6 +198,28 @@ public class ServiceController {
 			response = new ResponseEntity<>(responseStatus, HttpStatus.BAD_REQUEST);
 		} else {
 			List<HashMap<String, Object>> details = servicehelper.fetchUnits(request, "PMR");
+			if (details != null) {
+				response = new ResponseEntity<>(details, HttpStatus.OK);
+			} else {
+				responseStatus.setStatus("Failed");
+				responseStatus.setMessage("Invalid propertyID, Please try again");
+				response = new ResponseEntity<>(responseStatus, HttpStatus.NOT_FOUND);
+			}
+		}
+		return response;
+	}
+	
+	@RequestMapping(value = "/api/v1/getTenantDetails", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<Object> getTenantDetails(@RequestBody HashMap<String, String> request) {
+		ResponseEntity<Object> response = null;
+		if (!request.containsKey("username") || request.get("username") == null
+				|| request.get("username").equals("")) {
+			responseStatus.setStatus("Failed");
+			responseStatus.setMessage("Invalid Request/Bad Request");
+			response = new ResponseEntity<>(responseStatus, HttpStatus.BAD_REQUEST);
+		} else {
+			List<HashMap<String, Object>> details = servicehelper.TenantDetails(request, "PMR");
 			if (details != null) {
 				response = new ResponseEntity<>(details, HttpStatus.OK);
 			} else {
