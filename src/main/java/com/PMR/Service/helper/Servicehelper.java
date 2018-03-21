@@ -263,8 +263,8 @@ public class Servicehelper {
 			for (Document doc : unitdata) {
 				propertymap.put("unitname", doc.getString("unitname"));
 				propertymap.put("monthlyPayment", doc.getString("monthlyPayment"));
+				propertymap.put("monthlyPaymentDate", doc.getString("monthlyPaymentDate"));
 				propertymap.put("unitaddress", doc.get("unitaddress"));
-				propertymap.put("currentTenent", doc.getString("currentTenent"));
 				Propertieslist.add(propertymap);
 			}
 			dbconnection.closeConnection();
