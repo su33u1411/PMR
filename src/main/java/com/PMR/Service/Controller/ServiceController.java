@@ -219,7 +219,7 @@ public class ServiceController {
 			responseStatus.setMessage("Invalid Request/Bad Request");
 			response = new ResponseEntity<>(responseStatus, HttpStatus.BAD_REQUEST);
 		} else {
-			List<HashMap<String, Object>> details = servicehelper.TenantDetails(request, "PMR");
+			HashMap<String, Object> details = servicehelper.TenantDetails(request, "PMR");
 			if (details != null) {
 				response = new ResponseEntity<>(details, HttpStatus.OK);
 			} else {
