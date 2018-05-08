@@ -6,6 +6,10 @@ import java.util.Map;
 
 import org.bson.Document;
 import org.bson.conversions.Bson;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Component;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
@@ -14,15 +18,20 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 
+@Configuration
+@PropertySource("classpath:DB.properties")
+@Component
 public class DBConnection {
 
 	private MongoClient mongoClient;
 	private MongoDatabase database;
 	private MongoCollection<Document> mongoCollection;
+    
+	@Value("${DB_URL}")
+	private String mongodbUrl;
 
 	public void MakeConnection(String DBName) {
-		MongoClientURI uri = new MongoClientURI(
-				"mongodb://smogili:Winter17@pmr-shard-00-00-x0hbe.mongodb.net:27017,pmr-shard-00-01-x0hbe.mongodb.net:27017,pmr-shard-00-02-x0hbe.mongodb.net:27017/test?ssl=true&replicaSet=PMR-shard-0&authSource=admin");
+		MongoClientURI uri = new MongoClientURI(mongodbUrl);
 		mongoClient = new MongoClient(uri);
 		database = mongoClient.getDatabase(DBName);
 	}

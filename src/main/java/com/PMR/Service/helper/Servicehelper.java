@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.UUID;
 
 import org.bson.Document;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.PMR.DB.DBConnection;
 import com.PMR.main.model.Property;
@@ -13,8 +15,11 @@ import com.PMR.main.model.Unit;
 import com.PMR.main.model.Users;
 import com.lambdaworks.crypto.SCryptUtil;
 
+@Component
 public class Servicehelper {
-	DBConnection dbconnection = new DBConnection();
+	
+    @Autowired
+    private DBConnection dbconnection;
 
 	public boolean addUser(Users request, String dbname) {
 		dbconnection.MakeConnection(dbname);
