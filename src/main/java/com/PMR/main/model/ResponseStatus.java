@@ -1,5 +1,8 @@
 package com.PMR.main.model;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class ResponseStatus {
 	private String Status;
 	private String Message;

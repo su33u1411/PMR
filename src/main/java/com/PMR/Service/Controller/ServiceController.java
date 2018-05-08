@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.PMR.DB.DBConnection;
 import com.PMR.Service.helper.Servicehelper;
 import com.PMR.main.model.Property;
 import com.PMR.main.model.ResponseStatus;
@@ -25,9 +25,11 @@ import com.PMR.main.model.Users;
 @RestController
 @CrossOrigin
 public class ServiceController {
-	DBConnection dbcon = new DBConnection();
-	ResponseStatus responseStatus = new ResponseStatus();
-	Servicehelper servicehelper = new Servicehelper();
+    @Autowired
+    private ResponseStatus responseStatus;
+    @Autowired
+    private Servicehelper servicehelper;
+
 
 
 	@RequestMapping(value = "/api/v1/login", method = RequestMethod.POST)
