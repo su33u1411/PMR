@@ -6,6 +6,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
@@ -24,13 +25,12 @@ import com.PMR.main.model.Users;
 
 @RestController
 @CrossOrigin
+@ComponentScan("com.PMR.*")
 public class ServiceController {
-    @Autowired
-    private ResponseStatus responseStatus;
-    @Autowired
-    private Servicehelper servicehelper;
-
-
+	@Autowired
+	private ResponseStatus responseStatus;
+	@Autowired
+	private Servicehelper servicehelper;
 
 	@RequestMapping(value = "/api/v1/login", method = RequestMethod.POST)
 	@ResponseBody
@@ -54,13 +54,12 @@ public class ServiceController {
 		}
 		return response;
 	}
-	
+
 	@RequestMapping(value = "/api/v1/validateUsername", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<Object> validateUsername(@RequestBody HashMap<String, String> request) {
 		ResponseEntity<Object> response = null;
-		if (!request.containsKey("username") || request.get("username") == null
-				|| request.get("username").equals("")) {
+		if (!request.containsKey("username") || request.get("username") == null || request.get("username").equals("")) {
 			responseStatus.setStatus("Failed");
 			responseStatus.setMessage("Invalid Request/Bad Request");
 			response = new ResponseEntity<>(responseStatus, HttpStatus.BAD_REQUEST);
@@ -77,7 +76,7 @@ public class ServiceController {
 		}
 		return response;
 	}
-	
+
 	@RequestMapping(value = "/api/v1/addUser", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<Object> addUser(@Valid @RequestBody Users request, Errors error) {
@@ -132,12 +131,11 @@ public class ServiceController {
 			responseStatus.setMessage("Invalid Request/Bad Request");
 			response = new ResponseEntity<>(responseStatus, HttpStatus.BAD_REQUEST);
 		} else {
-			if(servicehelper.addUnit(request, "PMR")) {
+			if (servicehelper.addUnit(request, "PMR")) {
 				responseStatus.setStatus("Success");
 				responseStatus.setMessage("Units for property has been successfully updated/added");
 				response = new ResponseEntity<>(responseStatus, HttpStatus.OK);
-			}
-			else {
+			} else {
 				responseStatus.setStatus("Failed");
 				responseStatus.setMessage("Invalid PropertyID");
 				response = new ResponseEntity<>(responseStatus, HttpStatus.NOT_FOUND);
@@ -166,7 +164,7 @@ public class ServiceController {
 		}
 		return response;
 	}
-	
+
 	@RequestMapping(value = "/api/v1/getPropertydetails", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<Object> getPropertydetails(@RequestBody HashMap<String, String> request) {
@@ -188,7 +186,7 @@ public class ServiceController {
 		}
 		return response;
 	}
-		
+
 	@RequestMapping(value = "/api/v1/getUnits", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<Object> getUnits(@RequestBody HashMap<String, String> request) {
@@ -210,13 +208,12 @@ public class ServiceController {
 		}
 		return response;
 	}
-	
+
 	@RequestMapping(value = "/api/v1/getTenantDetails", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<Object> getTenantDetails(@RequestBody HashMap<String, String> request) {
 		ResponseEntity<Object> response = null;
-		if (!request.containsKey("username") || request.get("username") == null
-				|| request.get("username").equals("")) {
+		if (!request.containsKey("username") || request.get("username") == null || request.get("username").equals("")) {
 			responseStatus.setStatus("Failed");
 			responseStatus.setMessage("Invalid Request/Bad Request");
 			response = new ResponseEntity<>(responseStatus, HttpStatus.BAD_REQUEST);
