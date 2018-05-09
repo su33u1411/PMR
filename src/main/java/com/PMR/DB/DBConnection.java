@@ -26,7 +26,7 @@ public class DBConnection {
 	private MongoClient mongoClient;
 	private MongoDatabase database;
 	private MongoCollection<Document> mongoCollection;
-    
+
 	@Value("${DB_URL}")
 	private String mongodbUrl;
 
