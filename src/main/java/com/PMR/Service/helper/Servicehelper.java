@@ -17,9 +17,9 @@ import com.lambdaworks.crypto.SCryptUtil;
 
 @Component
 public class Servicehelper {
-	
-    @Autowired
-    private DBConnection dbconnection;
+
+	@Autowired
+	private DBConnection dbconnection;
 
 	public boolean addUser(Users request, String dbname) {
 		dbconnection.MakeConnection(dbname);
@@ -168,8 +168,7 @@ public class Servicehelper {
 		dbconnection.closeConnection();
 		return Updated;
 	}
-	
-	
+
 	public boolean validateUsername(HashMap<String, String> request, String dbname) {
 		boolean isfound = false;
 		dbconnection.MakeConnection(dbname);
@@ -236,11 +235,11 @@ public class Servicehelper {
 			return null;
 		}
 	}
-	
+
 	public List<HashMap<String, Object>> fetchUnits(HashMap<String, String> request, String dbname) {
 		dbconnection.MakeConnection(dbname);
 		List<Document> unitdata = dbconnection.findData("units", "propertyID", request.get("propertyID"));
-		if (unitdata.size() !=0) {
+		if (unitdata.size() != 0) {
 			List<HashMap<String, Object>> Propertieslist = new ArrayList<HashMap<String, Object>>();
 			HashMap<String, Object> propertymap = new HashMap<String, Object>();
 			for (Document doc : unitdata) {
@@ -258,11 +257,11 @@ public class Servicehelper {
 			return null;
 		}
 	}
-	
+
 	public HashMap<String, Object> TenantDetails(HashMap<String, String> request, String dbname) {
 		dbconnection.MakeConnection(dbname);
 		List<Document> unitdata = dbconnection.findData("units", "currentTenent", request.get("username"));
-		if (unitdata.size() !=0) {
+		if (unitdata.size() != 0) {
 			HashMap<String, Object> unitmap = new HashMap<String, Object>();
 			for (Document doc : unitdata) {
 				unitmap.put("unitname", doc.getString("unitname"));

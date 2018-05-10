@@ -31,16 +31,16 @@ public class Users {
 	private String ssn;
 	@NotNull
 	private String usertype;
-	
-	private String accountcreated;	
-	private String accountstatus;	
+
+	private String accountcreated;
+	private String accountstatus;
 	private Set<String> previouspasswords;
 	private String middlename;
 	private String homephone;
-	
+
 	public Users() {
 	}
-	
+
 	public String getUsername() {
 		return username;
 	}
@@ -62,24 +62,31 @@ public class Users {
 	public String getFirstname() {
 		return firstname;
 	}
+
 	public void setFirstname(String firstname) {
 		this.firstname = firstname;
 	}
+
 	public String getLastname() {
 		return lastname;
 	}
+
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
 	}
+
 	public String getMiddlename() {
 		return middlename;
 	}
+
 	public void setMiddlename(String middlename) {
 		this.middlename = middlename;
 	}
+
 	public String getDob() {
 		return dob;
 	}
+
 	public void setDob(String age) {
 		this.dob = age;
 	}
